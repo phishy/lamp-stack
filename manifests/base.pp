@@ -31,6 +31,20 @@ package { "php5-xdebug":
   ensure => present,
 }
 
+# upgrades PEAR, installs Codesniffer and PHPUnit
+exec {"/usr/bin/pear upgrade": 
+  require => Package['php-pear']
+}
+exec { "/usr/bin/pear install PHP_Codesniffer":
+  require => [Package['php-pear'], Exec['/usr/bin/pear upgrade']]
+}
+exec { "/usr/bin/pear config-set auto_discover 1":
+  require => [Package['php-pear'], Exec['/usr/bin/pear upgrade']]
+}
+exec { "/usr/bin/pear install pear.phpunit.de/PHPUnit":
+  require => [Package['php-pear'], Exec['/usr/bin/pear config-set auto_discover 1'], Exec['/usr/bin/pear upgrade']]
+}
+
 # starts the apache2 service once the packages installed, and monitors changes
 # to its configuration files and reloads if necessary
 service { "apache2":

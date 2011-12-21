@@ -9,8 +9,13 @@ Vagrant::Config.run do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "base"
 
+  # This enables Puppet as the default provisioner
   config.vm.provision :puppet
+
+  # If you require verbose output, you can substitute this line for above
   # config.vm.provision :puppet, :options => "--verbose"
+
+  # If you require verbose output, and wish to do a dry run, substitute this line
   # config.vm.provision :puppet, :options => "--verbose --debug"
 
   # The url from where the 'config.vm.box' box will be fetched if it
